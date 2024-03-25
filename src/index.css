@@ -17,5 +17,10 @@
 }
 
 .footer-container a:hover {
-    color: rgb(19, 109, 226);
+  color: rgb(19, 109, 226);
+}
+
+body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
