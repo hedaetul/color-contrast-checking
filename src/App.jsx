@@ -1,7 +1,7 @@
 import React from 'react';
 import ColorCard from './components/ColorCard';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
 
       <ColorCard />
 
-      <div className='flex justify-center items-center mt-12'>
+      <div className='flex justify-center items-center mt-12 font-mono'>
         <div>
           <h1 className='font-sans font-[700] text-[24px]'>
             How does it work?
