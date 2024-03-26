@@ -17,7 +17,7 @@ const ColorCard = () => {
 
   return (
     <div className='flex justify-center items-center pt-24 '>
-      <div className='flex flex-col gap-4 w-[550px] h-[420px] p-5 bg-white border rounded'>
+      <div className='flex flex-col gap-4 w-[550px] min-h-[420px] p-5 bg-white border rounded'>
         <div className='flex justify-between gap-2'>
           <div className='relative'>
             <label className='text-[14px]'>Text color</label>
@@ -35,6 +35,7 @@ const ColorCard = () => {
             />
             {showColor && (
               <ChromePicker
+              className='absolute'
                 disableAlpha
                 color={color}
                 onChange={(updatedColor) => setColor(updatedColor)}
@@ -55,6 +56,7 @@ const ColorCard = () => {
             />
             {showBgColor && (
               <ChromePicker
+                className='absolute'
                 disableAlpha
                 color={bgColor}
                 onChange={(updatedColor) => setBgColor(updatedColor)}
@@ -76,7 +78,7 @@ const ColorCard = () => {
       </div>
       <div
         style={{ background: bgColor.hex }}
-        className=' flex justify-center items-center text-center w-[550px] h-[420px] bg-[#ACC8E5]  rounded'
+        className=' flex justify-center items-center text-center w-[550px] min-h-[420px] bg-[#ACC8E5]  rounded'
       >
         <div className='max-w-[430px]'>
           <h1
