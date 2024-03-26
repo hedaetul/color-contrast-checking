@@ -7,6 +7,11 @@ const ColorCard = () => {
   const [showColor, setShowColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
 
+  const colorPickerStyle = {
+    border: '5px solid white',
+    borderRadius: '15px',
+  };
+
   const textPickerHandler = () => {
     setShowColor(!showColor);
   };
@@ -35,7 +40,7 @@ const ColorCard = () => {
             />
             {showColor && (
               <ChromePicker
-              className='absolute'
+                className='absolute mt-1'
                 disableAlpha
                 color={color}
                 onChange={(updatedColor) => setColor(updatedColor)}
@@ -56,7 +61,7 @@ const ColorCard = () => {
             />
             {showBgColor && (
               <ChromePicker
-                className='absolute'
+                className='mt-1 absolute '
                 disableAlpha
                 color={bgColor}
                 onChange={(updatedColor) => setBgColor(updatedColor)}
