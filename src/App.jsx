@@ -1,5 +1,5 @@
 import React from 'react';
-import ColorCard from './components/ColorCard';
+import ColorCard from './components/colorcard/ColorCard';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
