@@ -2,24 +2,25 @@ import { useState } from 'react';
 import ColorPickerCard from './ColorPickerCard';
 
 const initialTextColor = {
-  r: 0,
-  g: 0,
-  b: 0,
+  rgb: {
+    r: 34,
+    g: 34,
+    b: 34,
+  },
 };
 const initialBgColor = {
-  r: 255,
-  g: 255,
-  b: 255,
+  rgb: {
+    r: 172,
+    g: 200,
+    b: 229,
+  },
 };
 
 const ColorCard = () => {
-  const [color, setColor] = useState('#000');
+  const [color, setColor] = useState(initialTextColor);
   const [bgColor, setBgColor] = useState(initialBgColor);
   const [showColor, setShowColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
-
-  
-
 
   const textPickerHandler = () => {
     setShowColor(!showColor);
@@ -29,23 +30,25 @@ const ColorCard = () => {
     setShowBgColor(!showBgColor);
   };
 
-  // const L1 = () => {
-  //   return 0.2126 * color.rgb.r + 0.7152 * color.rgb.g + 0.0722 * color.rgb.b;
-  // };
+  const L1 = () => {
+    return 0.2126 * color.rgb.r + 0.7152 * color.rgb.g + 0.0722 * color.rgb.b;
+  };
 
-  // const L2 = () => {
-  //   return (
-  //     0.2126 * bgColor.rgb.r + 0.7152 * bgColor.rgb.g + 0.0722 * bgColor.rgb.b
-  //   );
-  // };
+  console.log(L1());
 
-  // const contrastRatio = () => {
-  //   const ratio = (L1() + 0.05) / (L2() + 0.05);
+  const L2 = () => {
+    return parseInt(
+      0.2126 * bgColor.rgb.r + 0.7152 * bgColor.rgb.g + 0.0722 * bgColor.rgb.b
+    );
+  };
 
-  //   return ratio.toFixed(2);
-  // };
+  const contrastRatio = () => {
+    const ratio = (Math.max(L1(), L2()) + 0.05) / (Math.min(L1(), L2()) + 0.05);
 
-  // console.log(contrastRatio());
+    return ratio.toFixed(2);
+  };
+
+  console.log(contrastRatio());
 
   return (
     <div className='flex justify-center items-center pt-24 '>
@@ -58,6 +61,7 @@ const ColorCard = () => {
         textPickerHandler={textPickerHandler}
         setColor={setColor}
         setBgColor={setBgColor}
+        contrastRatio={contrastRatio}
       />
       <div
         style={{ background: bgColor.hex }}
@@ -70,13 +74,13 @@ const ColorCard = () => {
           >
             Quote n. 18
           </h1>
-          <p style={{ color: color.hex }} className='text-gray-700 mt-6 mb-4'>
+          <p style={{ color: color.hex }} className='text-[#222222] mt-6 mb-4'>
             Before I got married I had six theories about bringing up children;
             now I have six children and no theories.
           </p>
           <h2
             style={{ color: color.hex }}
-            className='text-gray-950 font-sans/bold'
+            className='text-[#222222] font-sans/bold'
           >
             John Wilmot
           </h2>

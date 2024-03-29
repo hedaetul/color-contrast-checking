@@ -9,7 +9,8 @@ const ColorPickerCard = ({
   showColor,
   showBgColor,
   setColor,
-  setBgColor
+  setBgColor,
+  contrastRatio,
 }) => {
   return (
     <div>
@@ -25,9 +26,8 @@ const ColorPickerCard = ({
             />
             <span
               onClick={textPickerHandler}
-              id='text-color'
               style={{ background: color.hex }}
-              className='w-9 h-9 rounded-md absolute right-1 mt-[2.5px]  cursor-pointer'
+              className='bg-[#222222] w-9 h-9 border rounded-md absolute right-1 mt-[2.5px]  cursor-pointer'
             />
             {showColor && (
               <ChromePicker
@@ -50,7 +50,7 @@ const ColorPickerCard = ({
             <span
               onClick={bgPickerHandler}
               style={{ backgroundColor: bgColor.hex }}
-              className='w-9 h-9 bg-black rounded-md absolute right-1 mt-[2.5px] cursor-pointer'
+              className='w-9 h-9 bg-[#ACC8E5] rounded-md absolute right-1 mt-[2.5px] cursor-pointer'
             />
             {showBgColor && (
               <ChromePicker
@@ -67,11 +67,19 @@ const ColorPickerCard = ({
           <div className='flex flex-col gap-[1px] rounded-lg'>
             <div className=' flex justify-between items-center p-8 rounded-t-lg bg-[#D2FBD0]'>
               <div>
-                <h1 className='text-5xl text-[#0D5F07] font-extrabold'>4.5</h1>
+                <h1 className='text-5xl text-[#0D5F07] font-extrabold'>
+                  {contrastRatio()}
+                </h1>
               </div>
               <div>
                 <h1>Good</h1>
-                <ReactStars  count={5} size={26} value={4} edit={false} activeColor='#0D5F07' />
+                <ReactStars
+                  count={5}
+                  size={26}
+                  value={4}
+                  edit={false}
+                  activeColor='#0D5F07'
+                />
               </div>
             </div>
             <div className='flex justify-between gap-[1px] text-[#0D5F07]'>
@@ -80,7 +88,13 @@ const ColorPickerCard = ({
                   <h2>Small text</h2>
                 </div>
                 <div>
-                  <ReactStars count={3} size={20} value={3} edit={false} activeColor='#0D5F07' />
+                  <ReactStars
+                    count={3}
+                    size={20}
+                    value={3}
+                    edit={false}
+                    activeColor='#0D5F07'
+                  />
                 </div>
               </div>
               <div className='flex justify-between items-center bg-[#D2FBD0] w-full px-4 py-2 rounded-br-lg'>
@@ -88,7 +102,13 @@ const ColorPickerCard = ({
                   <h2>Large text</h2>
                 </div>
                 <div>
-                  <ReactStars count={3} size={20} value={0} edit={false} activeColor='#0D5F07' />
+                  <ReactStars
+                    count={3}
+                    size={20}
+                    value={0}
+                    edit={false}
+                    activeColor='#0D5F07'
+                  />
                 </div>
               </div>
             </div>
