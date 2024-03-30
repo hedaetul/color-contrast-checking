@@ -1,9 +1,24 @@
 import { useState } from 'react';
 import ColorPickerCard from './ColorPickerCard';
 
+const initialTextColor = {
+  rgb: {
+    r: 34,
+    g: 34,
+    b: 34,
+  },
+};
+const initialBgColor = {
+  rgb: {
+    r: 172,
+    g: 200,
+    b: 229,
+  },
+};
+
 const ColorCard = () => {
-  const [color, setColor] = useState('#000000');
-  const [bgColor, setBgColor] = useState('#');
+  const [color, setColor] = useState(initialTextColor);
+  const [bgColor, setBgColor] = useState(initialBgColor);
   const [showColor, setShowColor] = useState(false);
   const [showBgColor, setShowBgColor] = useState(false);
 
@@ -15,36 +30,25 @@ const ColorCard = () => {
     setShowBgColor(!showBgColor);
   };
 
-  const getContrastRatio = (textHex, bgHex) => {
-    const hexToRgb = (hex) => {
-      let r = parseInt(hex.slice(1, 3), 16);
-      let g = parseInt(hex.slice(1, 3), 16);
-      let b = parseInt(hex.slice(1, 3), 16);
-      return [r, g, b];
-    };
-
-    const [r1, g1, b1] = hexToRgb(textHex);
-    const [r2, g2, b2] = hexToRgb(bgHex);
-
-    const luminance = (r, g, b) => {
-      const a = [r, g, b].map((v) => {
-        v /= 225;
-        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-      });
-      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-    };
-
-    const luminance1 = luminance(r1, g1, b1);
-    const luminance2 = luminance(r2, g2, b2);
-
-    const contrast = (l1, l2) => {
-      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-    };
-
-    return contrast(luminance1, luminance2).toFixed(2);
+  const L1 = () => {
+    return 0.2126 * color.rgb.r + 0.7152 * color.rgb.g + 0.0722 * color.rgb.b;
   };
 
-  console.log(getContrastRatio);
+  console.log(L1());
+
+  const L2 = () => {
+    return parseInt(
+      0.2126 * bgColor.rgb.r + 0.7152 * bgColor.rgb.g + 0.0722 * bgColor.rgb.b
+    );
+  };
+
+  const contrastRatio = () => {
+    const ratio = (Math.max(L1(), L2()) + 0.05) / (Math.min(L1(), L2()) + 0.05);
+
+    return ratio.toFixed(2);
+  };
+
+  console.log(contrastRatio());
 
   return (
     <div className='flex justify-center items-center pt-24 '>
@@ -57,7 +61,7 @@ const ColorCard = () => {
         textPickerHandler={textPickerHandler}
         setColor={setColor}
         setBgColor={setBgColor}
-        getContrastRatio={getContrastRatio(color, bgColor)}
+        contrastRatio={contrastRatio}
       />
       <div
         style={{ background: bgColor.hex }}
