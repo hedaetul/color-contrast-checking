@@ -1,129 +1,91 @@
-import { ChromePicker } from 'react-color';
-import ReactStars from 'react-rating-stars-component';
+import { useState } from 'react';
+import ColorPickerCard from './ColorPickerCard';
 
-const ColorPickerCard = ({
-  textPickerHandler,
-  bgPickerHandler,
-  color,
-  bgColor,
-  showColor,
-  showBgColor,
-  setColor,
-  setBgColor,
-  contrastRatio,
-}) => {
+const initialTextColor = {
+  rgb: {
+    r: 34,
+    g: 34,
+    b: 34,
+  },
+};
+const initialBgColor = {
+  rgb: {
+    r: 172,
+    g: 200,
+    b: 229,
+  },
+};
+
+const ColorCard = () => {
+  const [color, setColor] = useState(initialTextColor);
+  const [bgColor, setBgColor] = useState(initialBgColor);
+  const [showColor, setShowColor] = useState(false);
+  const [showBgColor, setShowBgColor] = useState(false);
+
+  const textPickerHandler = () => {
+    setShowColor(!showColor);
+  };
+
+  const bgPickerHandler = () => {
+    setShowBgColor(!showBgColor);
+  };
+
+  const L1 = () => {
+    return 0.2126 * color.rgb.r + 0.7152 * color.rgb.g + 0.0722 * color.rgb.b;
+  };
+
+
+  const L2 = () => {
+    return parseInt(
+      0.2126 * bgColor.rgb.r + 0.7152 * bgColor.rgb.g + 0.0722 * bgColor.rgb.b
+    );
+  };
+
+  const contrastRatio = () => {
+    const ratio = (Math.max(L1(), L2()) + 0.05) / (Math.min(L1(), L2()) + 0.05);
+
+    return ratio.toFixed(2);
+  };
+
+
   return (
-    <div>
-      <div className='flex flex-col gap-4 w-[550px] min-h-[420px] p-5 bg-white border rounded'>
-        <div className='flex justify-between gap-2'>
-          <div className='relative'>
-            <label className='text-[14px]'>Text color</label>
-
-            <input
-              type='text'
-              placeholder={color.hex}
-              className='w-full h-10 rounded-lg p-1 border  border-gray-300'
-            />
-            <span
-              onClick={textPickerHandler}
-              style={{ background: color.hex }}
-              className='bg-[#222222] w-9 h-9 border rounded-md absolute right-1 mt-[2.5px]  cursor-pointer'
-            />
-            {showColor && (
-              <ChromePicker
-                className='absolute mt-1'
-                disableAlpha
-                color={color}
-                onChange={(updatedColor) => {
-                  setColor(updatedColor);
-                }}
-              />
-            )}
-          </div>
-          <div className='relative'>
-            <label className='text-[14px]'>Background color</label>
-            <input
-              placeholder={bgColor.hex}
-              type='text'
-              className='pl-2 w-full h-10 rounded-lg p-1 border  border-gray-300'
-            />
-            <span
-              onClick={bgPickerHandler}
-              style={{ backgroundColor: bgColor.hex }}
-              className='w-9 h-9 bg-[#ACC8E5] rounded-md absolute right-1 mt-[2.5px] cursor-pointer'
-            />
-            {showBgColor && (
-              <ChromePicker
-                className='mt-1 absolute '
-                disableAlpha
-                color={bgColor}
-                onChange={(updatedColor) => setBgColor(updatedColor)}
-              />
-            )}
-          </div>
-        </div>
-        <div>
-          <h3 className='text-[14px]'>Contrast</h3>
-          <div className='flex flex-col gap-[1px] rounded-lg'>
-            <div className=' flex justify-between items-center p-8 rounded-t-lg bg-[#D2FBD0]'>
-              <div>
-                <h1 className='text-5xl text-[#0D5F07] font-extrabold'>
-                  {contrastRatio()}
-                </h1>
-              </div>
-              <div>
-                <h1>Good</h1>
-                <ReactStars
-                  count={5}
-                  size={26}
-                  value={4}
-                  edit={false}
-                  activeColor='#0D5F07'
-                />
-              </div>
-            </div>
-            <div className='flex justify-between gap-[1px] text-[#0D5F07]'>
-              <div className='flex justify-between items-center bg-[#D2FBD0] w-full px-4 py-2 rounded-bl-lg'>
-                <div>
-                  <h2>Small text</h2>
-                </div>
-                <div>
-                  <ReactStars
-                    count={3}
-                    size={20}
-                    value={3}
-                    edit={false}
-                    activeColor='#0D5F07'
-                  />
-                </div>
-              </div>
-              <div className='flex justify-between items-center bg-[#D2FBD0] w-full px-4 py-2 rounded-br-lg'>
-                <div>
-                  <h2>Large text</h2>
-                </div>
-                <div>
-                  <ReactStars
-                    count={3}
-                    size={20}
-                    value={0}
-                    edit={false}
-                    activeColor='#0D5F07'
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <p className='text-[14px] text-gray-600 mt-2'>
-            Good contrast for small text (below 18pt) and great contrast for
-            large text (above 18pt) or bold above 14pt.
-            <a className='text-blue-600 hover:underline' href='#'>
-              Click to enhance
-            </a>
+    <div className='flex justify-center items-center pt-24 '>
+      <ColorPickerCard
+        bgColor={bgColor}
+        bgPickerHandler={bgPickerHandler}
+        color={color}
+        showBgColor={showBgColor}
+        showColor={showColor}
+        textPickerHandler={textPickerHandler}
+        setColor={setColor}
+        setBgColor={setBgColor}
+        contrastRatio={contrastRatio}
+      />
+      <div
+        style={{ background: bgColor.hex }}
+        className=' flex justify-center items-center text-center w-[550px] min-h-[420px] bg-[#ACC8E5]  rounded'
+      >
+        <div className='max-w-[430px]'>
+          <h1
+            style={{ color: color.hex }}
+            className='text-[36px] text-gray-800'
+          >
+            Quote n. 18
+          </h1>
+          <p style={{ color: color.hex }} className='text-[#222222] mt-6 mb-4'>
+            Before I got married I had six theories about bringing up children;
+            now I have six children and no theories.
           </p>
+          <h2
+            style={{ color: color.hex }}
+            className='text-[#222222] font-sans/bold'
+          >
+            John Wilmot
+          </h2>
         </div>
       </div>
     </div>
   );
 };
 
-export default ColorPickerCard;
+export default ColorCard;
